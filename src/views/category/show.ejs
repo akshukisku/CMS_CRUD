@@ -1,0 +1,15 @@
+<%- include("../partials/header", { title }) %>
+<%- include("../partials/navbar") %>
+<main class="container py-5">
+  <a href="/category" class="text-decoration-none">← All categories</a>
+  <div class="row g-4 mt-2 align-items-start">
+    <div class="col-lg-5"><img class="detail-image" src="<%= category.imageurl %>" alt="<%= category.name %>"></div>
+    <div class="col-lg-7"><span class="eyebrow">CATEGORY</span><h1 class="fw-bold mt-2"><%= category.name %></h1><p class="lead text-secondary"><%= category.description %></p><a class="btn btn-outline-primary" href="/category/<%= category.id %>/edit">Edit Category</a></div>
+  </div>
+  <hr class="my-5">
+  <h2 class="h3 fw-bold mb-4">Published content in this category</h2>
+  <% if (!contents.length) { %><div class="empty-state">No published content in this category yet.</div><% } else { %>
+    <div class="row g-4"><% contents.forEach(item => { %><div class="col-md-6 col-lg-4"><article class="content-card h-100"><% if(item.thumbnail){ %><img src="<%= item.thumbnail %>" alt="<%= item.title %>"><% } %><div class="p-3"><h5 class="fw-bold"><%= item.title %></h5><p class="text-secondary"><%= item.description %></p><a href="/content/<%= item.id %>" class="btn btn-sm btn-outline-primary">Read more</a></div></article></div><% }) %></div>
+  <% } %>
+</main>
+<%- include("../partials/footer") %>

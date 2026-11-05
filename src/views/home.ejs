@@ -1,0 +1,68 @@
+<%- include("./partials/header", { title }) %>
+<%- include("./partials/navbar") %>
+
+<main>
+  <section class="hero-section">
+    <div class="container py-5">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <span class="eyebrow">CATEGORY-BASED CONTENT PLATFORM</span>
+          <h1 class="display-4 fw-bold mt-3">Your content, <span class="brand-accent">beautifully organized.</span></h1>
+          <p class="lead text-secondary mt-3">Explore categories and discover useful articles, guides and updates.</p>
+          <div class="d-flex flex-wrap gap-2 mt-4">
+            <a href="/category" class="btn btn-primary btn-lg">Explore Categories</a>
+            <a href="/content" class="btn btn-outline-dark btn-lg">Manage Content</a>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="hero-card">
+            <div class="hero-card-icon">✦</div>
+            <h3 class="fw-bold">Simple content management</h3>
+            <p class="text-secondary mb-0">Create categories, publish content, and keep everything in one place.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container py-5">
+    <div class="section-heading">
+      <div><span class="eyebrow">BROWSE</span><h2 class="fw-bold mt-1">Categories</h2></div>
+      <a href="/category" class="text-decoration-none">View all →</a>
+    </div>
+    <% if (!categories.length) { %>
+      <div class="empty-state">No categories available yet. <a href="/category/create">Create the first category</a>.</div>
+    <% } else { %>
+      <div class="row g-4">
+        <% categories.slice(0, 6).forEach(category => { %>
+          <div class="col-sm-6 col-lg-4">
+            <a class="category-card" href="/category/<%= category.id %>">
+              <img src="<%= category.imageurl %>" alt="<%= category.name %>" onerror="this.src='https://placehold.co/800x500?text=Category'">
+              <div class="p-3"><h5 class="fw-bold mb-1"><%= category.name %></h5><p class="text-secondary mb-0"><%= category.description %></p></div>
+            </a>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </section>
+
+  <section class="container pb-5">
+    <div class="section-heading"><div><span class="eyebrow">LATEST</span><h2 class="fw-bold mt-1">Published Content</h2></div><a href="/content" class="text-decoration-none">Manage content →</a></div>
+    <% if (!contents.length) { %>
+      <div class="empty-state">No published content yet.</div>
+    <% } else { %>
+      <div class="row g-4">
+        <% contents.forEach(item => { %>
+          <div class="col-md-6 col-lg-4">
+            <article class="content-card h-100">
+              <% if (item.thumbnail) { %><img src="<%= item.thumbnail %>" alt="<%= item.title %>" onerror="this.style.display='none'"><% } %>
+              <div class="p-3"><span class="badge text-bg-light mb-2">Published</span><h5 class="fw-bold"><%= item.title %></h5><p class="text-secondary"><%= item.description %></p><a href="/content/<%= item.id %>" class="btn btn-sm btn-outline-primary">Read more</a></div>
+            </article>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </section>
+</main>
+
+<%- include("./partials/footer") %>

@@ -1,0 +1,24 @@
+<%- include("../partials/header", { title }) %>
+<%- include("../partials/navbar") %>
+<main class="container py-5">
+  <div class="section-heading"><div><span class="eyebrow">PUBLISH</span><h1 class="fw-bold mt-1">Content</h1><p class="text-secondary mb-0">Create, edit and manage articles.</p></div><a href="/content/create" class="btn btn-primary">+ Create Content</a></div>
+  <% if (!contents.length) { %><div class="empty-state mt-4">No content found. Create your first item.</div><% } else { %>
+    <div class="table-responsive mt-4 content-table-wrap">
+      <table class="table align-middle">
+        <thead><tr><th>Content</th><th>Category</th><th>Status</th><th>Updated</th><th class="text-end">Actions</th></tr></thead>
+        <tbody>
+          <% contents.slice().reverse().forEach(item => { %>
+            <tr>
+              <td><div class="d-flex align-items-center gap-3"><% if(item.thumbnail){ %><img class="table-thumb" src="<%= item.thumbnail %>" alt=""><% } else { %><div class="table-thumb placeholder-thumb">CMS</div><% } %><div><div class="fw-semibold"><%= item.title %></div><small class="text-secondary"><%= item.description %></small></div></div></td>
+              <td><%= categoryMap[item.categoryId]?.name || "Unknown" %></td>
+              <td><span class="badge <%= item.status === 'published' ? 'text-bg-success' : 'text-bg-secondary' %>"><%= item.status %></span></td>
+              <td><small><%= formatDate(item.updatedAt) %></small></td>
+              <td><div class="d-flex justify-content-end flex-wrap gap-2"><% if(item.status === 'published'){ %><a class="btn btn-sm btn-outline-primary" href="/content/<%= item.id %>">View</a><% } %><a class="btn btn-sm btn-outline-secondary" href="/content/<%= item.id %>/edit">Edit</a><form action="/content/<%= item.id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this content?')"><button class="btn btn-sm btn-outline-danger">Delete</button></form></div></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</main>
+<%- include("../partials/footer") %>

@@ -1,0 +1,15 @@
+<%- include("../partials/header", { title }) %>
+<%- include("../partials/navbar") %>
+<main class="container py-5 article-container">
+  <a href="/category/<%= category.id %>" class="text-decoration-none">← <%= category.name %></a>
+  <article class="mt-4">
+    <% if(item.thumbnail){ %><img class="article-cover" src="<%= item.thumbnail %>" alt="<%= item.title %>"><% } %>
+    <span class="eyebrow d-block mt-4"><%= category.name %></span>
+    <h1 class="display-5 fw-bold mt-2"><%= item.title %></h1>
+    <p class="lead text-secondary"><%= item.description %></p>
+    <p class="text-muted small">Published · <%= formatDate(item.updatedAt) %></p>
+    <hr class="my-4">
+    <div class="article-body"><%= item.body %></div>
+  </article>
+</main>
+<%- include("../partials/footer") %>

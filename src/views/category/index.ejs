@@ -1,0 +1,28 @@
+<%- include("../partials/header", { title }) %>
+<%- include("../partials/navbar") %>
+<main class="container py-5">
+  <div class="section-heading">
+    <div><span class="eyebrow">ORGANIZE</span><h1 class="fw-bold mt-1">Categories</h1><p class="text-secondary mb-0">Create and manage your content categories.</p></div>
+    <a href="/category/create" class="btn btn-primary">+ Create Category</a>
+  </div>
+  <% if (!categories.length) { %><div class="empty-state mt-4">No categories found. Create your first category.</div><% } else { %>
+    <div class="row g-4 mt-1">
+      <% categories.forEach(category => { %>
+        <div class="col-sm-6 col-lg-4">
+          <div class="category-card h-100">
+            <img src="<%= category.imageurl %>" alt="<%= category.name %>" onerror="this.src='https://placehold.co/800x500?text=Category'">
+            <div class="p-3">
+              <h5 class="fw-bold"><%= category.name %></h5><p class="text-secondary"><%= category.description %></p>
+              <div class="d-flex flex-wrap gap-2">
+                <a class="btn btn-sm btn-outline-primary" href="/category/<%= category.id %>">View</a>
+                <a class="btn btn-sm btn-outline-secondary" href="/category/<%= category.id %>/edit">Edit</a>
+                <form action="/category/<%= category.id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this category?')"><button class="btn btn-sm btn-outline-danger">Delete</button></form>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</main>
+<%- include("../partials/footer") %>
